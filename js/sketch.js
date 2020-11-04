@@ -138,8 +138,8 @@ function wait(){
     text("(Question)In the next graf you shuld find the ___", wi/2,hi/2);
     textSize(wi/35);
     text("Klikk _Space_ when you are reddy to se the next graf", wi/2,hi/2+(hi/8));
-    textSize(wi/40);
-    text("Remmeber to klikk _Space_ as at the moment you see the answere", wi/2,hi/2+(hi/8));
+    textSize(wi/45);
+    text("Remmeber to klikk _Space_ at the moment you see the answere", wi/2,hi/2+(hi/8)+(hi/8));
 
     //Also needs question
     noFill();
