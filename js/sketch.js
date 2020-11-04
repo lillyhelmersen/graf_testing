@@ -60,8 +60,8 @@ function setup() {
   background(255);
   console.log("tryli index: " + ctx.trialIndex);
   makeHitBoxTable();
-  defoltStyle();
-  setupTable();
+  //defoltStyle();
+  //setupTable();
   //newGrafQue();
   //pick(quantity);
   //startOfTrail();
@@ -70,7 +70,7 @@ function setup() {
 function startOfTrail(){
   clear();
   //printPalet(3);
-  setHitBox();
+  //setHitBox();//Might need to be added later
   printStartScreen();
   //printPalet(3);
 }
@@ -84,8 +84,9 @@ function printStartScreen(){
   textSize(wi/textSize2);
   text("We will ask you to find infomration in the grafs ",wi/2,hi/4+(wi/30));
   text("1. Look for the answer as fast as possible and press _Space_ bar when you found it",wi/2,hi/4+(wi/30)+(wi/30));
-  text("2. When the goust of the graf appers _mouse_ click on where you found the answere",wi/2,hi/4+(wi/30)+(wi/30)+(wi/textSize2));
-  text("Press _Enter_ key when you are ready to start.",wi/2,hi/4+(wi/30)+(wi/30)+(wi/textSize2)+(wi/30));
+  text("Then you will see the graf without numbers where you are suposed to _mouse_ click",wi/2,hi/4+(wi/30)+(wi/30)+(wi/textSize2));
+  text("2. When the goust of the graf appers _mouse_ click on where you found the answere",wi/2,hi/4+(wi/30)+(wi/30)+(wi/textSize2)+(wi/textSize2));
+  text("Press _Enter_ key when you are ready to start.",wi/2,hi/4+(wi/30)+(wi/30)+(wi/textSize2)+(wi/30)+(wi/textSize2));
 
   noFill();
 }
@@ -132,9 +133,14 @@ function wait(){
     notFirst++;
     textSize(wi/10);
     fill(0);
-    text("Wait",wi/2,hi/2);
-    textSize(wi/30);
-    text("Klikk _Space_ when you are reddy to se the next graf", wi/2,hi/2+(wi/10));
+    text("Wait",wi/2,hi/2-(hi/4));
+    textSize(wi/25);
+    text("(Question)In the next graf you shuld find the ___", wi/2,hi/2);
+    textSize(wi/35);
+    text("Klikk _Space_ when you are reddy to se the next graf", wi/2,hi/2+(hi/8));
+    textSize(wi/40);
+    text("Remmeber to klikk _Space_ as at the moment you see the answere", wi/2,hi/2+(hi/8));
+
     //Also needs question
     noFill();
   }
