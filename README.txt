@@ -4,3 +4,9 @@ TODO
   Could alculay just record cord and then I could se if its good
   then shuld provide wi and hi to chek for right
 2. chekt way auguts dont want to worke...?
+
+
+Writing
+1. detaled description of the grafes
+  Way this visualizations was chosen
+  

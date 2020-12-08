@@ -8,6 +8,7 @@ var startTime;
 var spottingTime;
 
 //For grafs
+
 var graf1Tab; // holding grafs and there hit bx
 var graf1Giff;
 var graf1GiffWi;
@@ -25,7 +26,9 @@ var industry3infoDisTab = [];
 var graf3Image;
 var graf3ImageGray;
 
-var infoDis = {
+
+
+var infoDis, lastDisDrwn = {
   g: 0,
   q: 0,
   year: 2000,
@@ -201,8 +204,8 @@ function look(){
 }
 function pick(){
   //console.log("in pick count");
-    bol1 = true;
-    colordDis = false;
+  bol1 = true;
+  colordDis = false;
   graf1Giff.hide();
   spottingTime = new Date().getTime() - startTime;
   //console.log("Time of tril: " + spottingTime
@@ -279,6 +282,17 @@ function printSpesGrafShadow(graf){
   image(graf, wi/2-grafWi/2,hi/2-grafHi/2);
 
 }
+function reDrawGrafNow(){
+  clear();
+  //draw graf agein
+  if(grafNow == 2){
+    printSpesGraf(graf2Image);
+  } else if (grafNow == 3){
+    printSpesGraf(graf3Image);
+  } else {
+    pritn("Cant repritn graf in drawDisplay");
+  }
+}
 function drawDisplay(thisHitBox){//
   /*var infoDis = {
     g: 0,
@@ -290,18 +304,21 @@ function drawDisplay(thisHitBox){//
     coX: 0,
     coY: 0,
   }*/
+  reDrawGrafNow();
+
+
   print("I am drawing a box now");
-  var disText = "tmep text it is so \n\n\nccoosodjfj ladiddia "
+  var disText = "x: " + thisHitBox.mont + "\ny: " + thisHitBox.value + "\nid: " + thisHitBox.year + "\nmonths: " + thisHitBox.mont + "\nfactor(id): " + thisHitBox.year;
   var x = thisHitBox.coX * wi;
   var y = thisHitBox.coY * hi;
   var colorInsideBox = thisHitBox.color;
 
   //------------------
   var tO = 5;//triOfsett
-  var ryO = 50;//recOfsett for y
-  var rxO = 50;//recOfsett for x
+  var ryO = 45;//recOfsett for y
+  var rxO = 100;//recOfsett for x
   //------------------
-  print("colorInsideBox: " + colorInsideBox);
+  //print("colorInsideBox: " + colorInsideBox);
   fill(colorInsideBox);
   stroke('#000000');
   strokeWeight(2);
@@ -319,9 +336,14 @@ function drawDisplay(thisHitBox){//
   noStroke();
   //------------------
   stroke('#000000');
-  strokeWeight(1);
-  text(disText, x+tO+3, y-tO-ryO+3, rxO-3, ryO-3);
+  fill('#000000');
+  strokeWeight(0);
+  textSize(14);
+  textAlign(LEFT, TOP);
+  text(disText, x+tO+3, y-ryO, rxO,ryO*2);
   noStroke();
+  noFill();
+  textAlign(CENTER, CENTER);
 }
 
 function draw() {
@@ -437,13 +459,22 @@ function inInfoDis(){
   var tab;
   var smalestBox;
   var smalest = wi+hi;
-  var minDistasn = 5;
+  var minDistasn = 10;
   var draw = false;
+//----------redraws graf id our to far away from point----------
+  var lastBox = lastDisDrwn;
+  var tempX1 = lastBox.coX* wi;
+  var tempY1 = lastBox.coY* hi;
+  let d1 = int(dist(tempX1, tempY1, mouseX, mouseY));
+  print("d1: " + d1);
+  if(d1 > minDistasn){
+    reDrawGrafNow();
+  }
 
-  if (nowGraf = 2){
+  if (grafNow == 2){
     tab = industry2infoDisTab;
     draw = true;
-  } else if (nowGraf = 3){
+  } else if (grafNow == 3){
     tab = industry3infoDisTab;
     draw = true;
   } else {
@@ -454,15 +485,24 @@ function inInfoDis(){
       var tempX = tab[i].coX * wi;
       var tempY = tab[i].coY * hi;
       let d = int(dist(tempX, tempY, mouseX, mouseY));
+
+      //drawDibuging(tempX,tempY);
+
       if(d < smalest){
         smalest = d;
         smalestBox = tab[i];
       }
     }
     if (smalest <= minDistasn){
+      lastDisDrwn = smalestBox;
       drawDisplay(smalestBox);
     }
   }
+}
+function drawDibuging(x,y){
+  fill('#000000');
+  circle(x,y,2);
+  noFill();
 }
 
 function finiched(){
