@@ -13,6 +13,7 @@ var graf1Tab; // holding grafs and there hit bx
 var graf1Giff;
 var graf1GiffWi;
 var graf1GiffHi;
+var graf1GiffGray;
 
 var graf2Tab;
 var industry2Tab;
@@ -53,9 +54,9 @@ var grafNow = 1;
 var colordDis = false;
 //Question
 var questTab = [
-  "Q1",
-  "Q2",
-  "Q3"
+  "What was the GDP in May 2020?",
+  "What was the GDP in April 2016?",
+  "What was the GDP in February 2018?"
 ]
 var questNow = 1;
 
@@ -80,11 +81,14 @@ var notFirst = 0;
 
 function preload(){
   graf1Giff = createImg("graph/Industry1.gif");//graf1Giff.position(50,100)
+  graf1GiffGray = loadImage("graph/Industry1Gray.jpg")
   graf1Giff.hide();
   graf2Image = loadImage("graph/Industry2.jpg");
   graf3Image = loadImage("graph/Industry3.jpg");
-  graf2ImageGray = loadImage("graph/Industry2.jpg");
-  graf3ImageGray = loadImage("graph/Industry3.jpg");
+  graf2ImageGray = loadImage("graph/Industry2Gray.jpg");
+  graf3ImageGray = loadImage("graph/Industry3Gray.jpg");
+
+  graf1GiffGray.filter(GRAY);
   graf2ImageGray.filter(GRAY);
   graf3ImageGray.filter(GRAY);
 
@@ -122,12 +126,12 @@ function printStartScreen(){
   textSize(wi/30);
   textAlign(CENTER, CENTER);
   fill(0);
-  text("Multiple grafs will get displayed.",wi/2,hi/4);
+  text("Multiple graphs will get displayed.",wi/2,hi/4);
   textSize(wi/textSize2);
-  text("We will ask you to find infomration in the grafs ",wi/2,hi/4+(wi/30));
+  text("We will ask you to find information in the graphs",wi/2,hi/4+(wi/30));
   text("1. Look for the answer as fast as possible and press _Space_ bar when you found it",wi/2,hi/4+(wi/30)+(wi/30));
-  text("Then you will see the graf without numbers where you are suposed to _mouse_ click",wi/2,hi/4+(wi/30)+(wi/30)+(wi/textSize2));
-  text("2. When the goust of the graf appers _mouse_ click on where you found the answere",wi/2,hi/4+(wi/30)+(wi/30)+(wi/textSize2)+(wi/textSize2));
+  text("Then you will see the graph without numbers where you are supposed to _mouse_ click",wi/2,hi/4+(wi/30)+(wi/30)+(wi/textSize2));
+  text("2. When the goust of the graph appears  _mouse_ click on where you found the answere",wi/2,hi/4+(wi/30)+(wi/30)+(wi/textSize2)+(wi/textSize2));
   text("Press _Enter_ key when you are ready to start.",wi/2,hi/4+(wi/30)+(wi/30)+(wi/textSize2)+(wi/30)+(wi/textSize2));
 
   noFill();
@@ -188,9 +192,9 @@ function wait(){
     textSize(wi/25);
     text(questionNow, wi/2,hi/2);
     textSize(wi/35);
-    text("Klikk _Space_ when you are reddy to se the next graf", wi/2,hi/2+(hi/8));
+    text("Klikk Space when you are ready to see the next graph", wi/2,hi/2+(hi/8));
     textSize(wi/45);
-    text("Remmeber to klikk _Space_ at the moment you see the answere", wi/2,hi/2+(hi/8)+(hi/8));
+    text("Remember to klikk _Space_ at the moment you see the answers", wi/2,hi/2+(hi/8)+(hi/8));
 
     //Also needs question
     noFill();
@@ -375,15 +379,18 @@ function drawPlacholders(){
   fill(0);
   textSize(wi/30);
   if (grafNow == 1){
-
+    var grafWi = graf1GiffGray.width;
+    var grafHi = graf1GiffGray.height;
+    graf1GiffGray.filter(GRAY);
+    image(graf1GiffGray, wi/2-grafWi/2,hi/2-grafHi/2);
   } else if (grafNow == 2){
     printSpesGrafShadow(graf2ImageGray);
   } else if (grafNow == 3){
     printSpesGrafShadow(graf3ImageGray);
   } else {
-    text("Wher in the graf did you fint the info", wi/2,hi/2);
+    text("Where in the graf did you find the info", wi/2,hi/20);
   }
-  text("Wher in the graf did you fint the info", wi/2,hi/2);
+  text("Where in the graf did you find the info", wi/2,hi/20);
 
   //Also needs question
   noFill();
@@ -528,14 +535,19 @@ function setupTable() {
   table.addColumn('Graf');//Graf
   table.addColumn('Quest');//Question
   table.addColumn('Time');
+  table.addColumn('xCord');
+  table.addColumn('yCord');
+
 }
-function newRowInTable(time){
+function newRowInTable(time, x, y){
 
     var par = ctx.trials[ctx.cpt][ctx.participantIndex];
     var blo = ctx.trials[ctx.cpt][ctx.blockIndex];
     var tra = ctx.trials[ctx.cpt][ctx.trialIndex];
     var gra = ctx.trials[ctx.cpt][ctx.grafIndex];
     var queI = ctx.trials[ctx.cpt][ctx.queIndex];
+    var xCord = x;
+    var yCord = y;
 
     let newRow = table.addRow();//insertRow addRow()
     newRow.setNum('Participant',  par);
@@ -544,6 +556,8 @@ function newRowInTable(time){
     newRow.setString('Graf',      gra);
     newRow.setString('Quest',     queI);
     newRow.setNum('Time',         time);
+    newRow.setNum('xCord',         xCord);
+    newRow.setNum('yCord',         yCord);
 
 }
 function saveMyTable(){
@@ -615,7 +629,7 @@ function mousePressed() {
             if(inHitBox(mX,mY)){
               console.log("Mouse is in the box");
               lastWasCorrect = true;
-              newRowInTable(spottingTime);
+              newRowInTable(spottingTime,mX,mY);
               notDone = false;
             } else {
               lastWasCorrect = false;
