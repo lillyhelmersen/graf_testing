@@ -261,6 +261,7 @@ function printG1(){
   graf1GiffHi = graf1Giff.height;
   //console.log("test giff hight: " + graf1GiffWH);
   graf1Giff.position(wi/2-graf1GiffWi/2,hi/2-graf1GiffHi/2)
+  //drawCordOnScreen();
   graf1Giff.show();
 }
 function printSpesGraf(graf){
@@ -294,7 +295,7 @@ function reDrawGrafNow(){
   } else if (grafNow == 3){
     printSpesGraf(graf3Image);
   } else {
-    pritn("Cant repritn graf in drawDisplay");
+    print("Cant repritn graf in drawDisplay");
   }
 }
 function drawDisplay(thisHitBox){//
@@ -354,25 +355,32 @@ function draw() {
   fill(255);
   frameRate(12);
   //drawDisplay();
-  /* // drawing mous cords on screen
-    print("x: " + mouseX + " y: " + mouseY);
-    s = "x: " + mouseX + " y: " + mouseY;
-    fill('#ffffff');
-    noStroke();
-    rect(0,0,400,30);
-    stroke('#000000');
-    strokeWeight(0);
-    fill('#000000');
-    textSize(11);
-    text(s,150,20);
-    noFill();
-  //*/
+   // drawing mous cords on screen
+   //drawCordOnScreen()
   if(colordDis){
     inInfoDis();
   }
 
+  fill('#000000');
+  textSize(11);
+  text("wi: " + wi + " hi: " + hi,150,20);
+  noFIll();
 
 
+
+}
+function drawCordOnScreen(){
+  print("x: " + mouseX + " y: " + mouseY);
+  s = "x: " + mouseX + " y: " + mouseY;
+  fill('#ffffff');
+  noStroke();
+  rect(0,0,400,30);
+  stroke('#000000');
+  strokeWeight(0);
+  fill('#000000');
+  textSize(11);
+  text(s,150,20);
+  noFill();
 }
 function drawPlacholders(){
   clear();
@@ -462,7 +470,7 @@ function inHitBox(x,y){//Needs to be fix
   return true;
 }
 function inInfoDis(){
-  print("Start of inInfoDis");
+  //print("Start of inInfoDis");
   var tab;
   var smalestBox;
   var smalest = wi+hi;
@@ -473,7 +481,7 @@ function inInfoDis(){
   var tempX1 = lastBox.coX* wi;
   var tempY1 = lastBox.coY* hi;
   let d1 = int(dist(tempX1, tempY1, mouseX, mouseY));
-  print("d1: " + d1);
+  //print("d1: " + d1);
   if(d1 > minDistasn){
     reDrawGrafNow();
   }
@@ -485,7 +493,7 @@ function inInfoDis(){
     tab = industry3infoDisTab;
     draw = true;
   } else {
-    print ("Where is my graf 432?");
+    //print ("Where is my graf 491?");
   }
   if (draw) {
     for(i = 0; i < tab.length; i++){
@@ -613,6 +621,7 @@ function keyPressed() {
   }
 }
 function mousePressed() {
+  print("MP - X: " + mouseX + " Y: " + mouseY);
   if (!finichedBol) {//finiched
     if(true){
       bol1 = false;
